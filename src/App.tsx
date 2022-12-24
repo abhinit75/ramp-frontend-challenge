@@ -96,7 +96,6 @@ export function App() {
               className="RampButton"
               disabled={paginatedTransactionsUtils.loading}
               onClick={async () => {
-                console.log("Existing transactions: " + transactions)
                 await loadViewMore(transactions)
               }}
             >

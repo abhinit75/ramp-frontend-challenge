@@ -6,11 +6,8 @@ import { useCustomFetch } from "./useCustomFetch"
 export function useLoadViewMoreTransactions(): FullTransactionResult {
   const { fetchWithCache, loading } = useCustomFetch()
   const [loadTransactions, setLoadTransactions] = useState<Transaction[] | null>()
-  const [transactionsByEmployee, setTransactionsByEmployee] = useState<Transaction[] | null>(null)
 
   const fetchAll = useCallback(async (transactions: Transaction[]) => {
-    console.log("Final Transactions: " + typeof(transactions))
-
     const response = await fetchWithCache<FullResponse<Transaction[] | null>>("loadViewMore")
 
     // combine into one
@@ -21,13 +18,11 @@ export function useLoadViewMoreTransactions(): FullTransactionResult {
 
     // add from object to array
     transactions.map((t) => {
-        console.log("ID FOR KEY: " + t.id)
         transactionsTable[t.id] = t.id;
         finalArr.push(t)
     })
 
     response?.data?.map((t) => {
-        console.log(t)
         if (!(t.id in transactionsTable)) {
             finalArr.push(t)
         }

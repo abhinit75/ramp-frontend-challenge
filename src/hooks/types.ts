@@ -1,4 +1,4 @@
-import { Employee, FullResponse, PaginatedResponse, Transaction, EmployeeTransactions } from "../utils/types"
+import { Employee, FullResponse, PaginatedResponse, Transaction } from "../utils/types"
 
 type UseTypeBaseResult<TValue> = {
   data: TValue
@@ -21,4 +21,4 @@ null>
 
 export type FullTransactionResult = UseTypeBaseAllResult<FullResponse<Transaction[]> | null>
 
-export type TransactionsByEmployeeResult = UseTypeBaseByIdResult<EmployeeTransactions<Transaction[] | null>>
+export type TransactionsByEmployeeResult = UseTypeBaseByIdResult<Transaction[] | null>

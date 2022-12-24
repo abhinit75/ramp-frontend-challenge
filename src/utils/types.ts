@@ -20,12 +20,6 @@ export type PaginatedResponse<TData> = {
 
 export type FullResponse<TData> = {
   data: TData
-  employeeId: string
-}
-
-export type EmployeeTransactions<TData> = {
-  data: TData
-  employeeId: string 
 }
 
 export type PaginatedRequestParams = {
