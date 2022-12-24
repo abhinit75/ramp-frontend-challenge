@@ -5,9 +5,9 @@ import { InputCheckboxComponent } from "./types"
 export const InputCheckbox: InputCheckboxComponent = ({ id, checked = false, disabled, onChange }) => {
   const { current: inputId } = useRef(`RampInputCheckbox-${id}`)
 
-  const [isChecked, setIsChecked] = useState(checked);
+  const [isChecked, setIsChecked] = useState<Boolean>(checked);
 
-  const onInputChange = (newValue: boolean) => {
+  const onInputChange = (newValue) => {
     setIsChecked(newValue)
     onChange(newValue)
   }

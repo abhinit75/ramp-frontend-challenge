@@ -3,6 +3,7 @@ import {
   getTransactionsPaginated,
   getTransactionsByEmployee,
   setTransactionApproval,
+  getTransactionsViewMore,
 } from "./requests"
 import { PaginatedRequestParams, RequestByEmployeeParams, SetTransactionApprovalParams } from "./types"
 
@@ -41,6 +42,14 @@ export function fakeFetch<TData, TParams extends object = object>(
             resolve(result)
           }, mockTimeout * 2.5)
           break
+        
+        case "loadViewMore":
+          result = getTransactionsViewMore() as unknown as TData
+          setTimeout(() => {
+            mockApiLogger({ data: { endpoint, params, result } })
+            resolve(result)
+          }, mockTimeout * 2.5)
+          break 
 
         case "transactionsByEmployee":
           result = getTransactionsByEmployee(params as RequestByEmployeeParams) as unknown as TData
@@ -124,3 +133,4 @@ export type RegisteredEndpoints =
   | "paginatedTransactions"
   | "transactionsByEmployee"
   | "setTransactionApproval"
+  | "loadViewMore"

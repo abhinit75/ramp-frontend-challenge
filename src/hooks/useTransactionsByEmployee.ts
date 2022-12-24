@@ -1,22 +1,26 @@
 import { useCallback, useState } from "react"
-import { RequestByEmployeeParams, Transaction } from "../utils/types"
-import { TransactionsByEmployeeResult } from "./types"
+import { RequestByEmployeeParams, Transaction, EmployeeTransactions } from "../utils/types"
+import { TransactionsByEmployeeResult, } from "./types"
 import { useCustomFetch } from "./useCustomFetch"
 
 export function useTransactionsByEmployee(): TransactionsByEmployeeResult {
   const { fetchWithCache, loading } = useCustomFetch()
-  const [transactionsByEmployee, setTransactionsByEmployee] = useState<Transaction[] | null>(null)
+  const [transactionsByEmployee, setTransactionsByEmployee] = useState<EmployeeTransactions<Transaction[] | null> | null>()
+
+  const [id, setId] = useState("")
 
   const fetchById = useCallback(
     async (employeeId: string) => {
-      const data = await fetchWithCache<Transaction[], RequestByEmployeeParams>(
+      setId(employeeId)
+      const response = await fetchWithCache<EmployeeTransactions<Transaction[] | null>, RequestByEmployeeParams>(
         "transactionsByEmployee",
         {
           employeeId,
         }
       )
+      console.log(response)
 
-      setTransactionsByEmployee(data)
+      setTransactionsByEmployee(response)
     },
     [fetchWithCache]
   )
@@ -25,5 +29,7 @@ export function useTransactionsByEmployee(): TransactionsByEmployeeResult {
     setTransactionsByEmployee(null)
   }, [])
 
-  return { data: transactionsByEmployee, loading, fetchById, invalidateData }
+  //console.log("Employee ID: " + id)
+
+  return { data: transactionsByEmployee, employeeId: id, loading, fetchById, invalidateData }
 }
